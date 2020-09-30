@@ -3,9 +3,9 @@
 <h1 align="center">Next.js ☀️ SQL</h1>
 
 <div align="center">
-[![Deploy with Vercel](https://zeit.co/button)](https://zeit.co/new/project?template=https://github.com/Fredestrik/Next.Js-SQL-app)
 
-A full-fledged Next.Js app powered by an SQL database. Fully compatible with PostgreSQL, MySQL & SQLite
+A full-fledged Next.Js app powered by an SQL database. <br/>
+Fully compatible with PostgreSQL, MySQL & SQLite
 
 </div>
 
@@ -66,6 +66,7 @@ A full-fledged Next.Js app powered by an SQL database. Fully compatible with Pos
 <sup>Have any features that interest you, [make an issue](https://github.com/Fredestrik/Next.Js-SQL-app/issues). Would like to work on a feature, [make a PR](https://github.com/Fredestrik/Next.Js-SQL-app/pulls).<sup>
   
 </div>
+
 ---
 
 _How security is managed?_
