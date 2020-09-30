@@ -34,20 +34,6 @@ export default () =>{
   </div>
   
   <div className={"navbar-menu " + (isClicked ? "is-active" : "")}>
-    <div className="navbar-start">
-    <Link href="/public">
-    <a className="navbar-item">
-      <h1>Public Page</h1>
-    </a>
-    </Link>
-    <Link href="/restricted">
-      <a className="navbar-item">
-        <h1>Restricted Page</h1>
-      </a>
-    </Link>
-    </div>
-
-
     {!isAuthenticated &&
     <div className="navbar-end">
         <div className="navbar-item">
