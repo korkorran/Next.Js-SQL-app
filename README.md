@@ -6,12 +6,14 @@
 
 A full-fledged Next.Js app powered by an SQL database. <br/>
 Fully compatible with PostgreSQL, MySQL & SQLite
-
 </div>
+
+<p align="center"><b>Online demo at <a href="https://nextjs-sql-app.vercel.app">https://nextjs-sql-app.vercel.app/</a> </b></p>
+
 
 <h2 align="center">Features</h2>
 
-<p align="center">:heavy_check_mark: No Express.js :heavy_check_mark: Serverless ready :heavy_check_mark: API Routes /p>
+<p align="center">:heavy_check_mark: No Express.js :heavy_check_mark: Serverless ready :heavy_check_mark: API Routes </p>
 
 <h3 align="center">:lock: Authentication</h3>
 
@@ -82,10 +84,6 @@ Vercel serve apps with HTTPS by default, so you have no reasons to have security
 * privates API routes are protected with the [next-iron-session](https://github.com/vvo/next-iron-session) utility. If the user is not authentified, the data from the API endpoint is not returned.
 * 📱 The design is made with [Bulma.io](https://bulma.io/) CSS and is fully responsive.
 * SQL Database requests are made with the [Knex.Js](http://knexjs.org/) SQL query builder.
-
----
-
-<p align="center"><b>Online demo at <a href="https://next-basicauth-starter.vercel.app/">https://nextjs-sql-app.vercel.app/</a> </b></p>
 
 ## Getting Started
 

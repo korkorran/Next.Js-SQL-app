@@ -15,7 +15,7 @@ export default () =>{
   <Link href="/">
     <a className="navbar-item" >
       <h1>
-        <b> <span className="is-size-4" style={{verticalAlign:"middle"}}>🛡️</span>
+        <b> <span className="is-size-4" style={{verticalAlign:"middle"}}>🏛</span>
         Next.Js SQL App</b>
       </h1>
     </a>

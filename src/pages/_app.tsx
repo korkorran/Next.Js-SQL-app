@@ -13,7 +13,7 @@ export default function({ Component, pageProps }) {
   return (
     <AuthProvider>
       <Head>
-        <title>Next BasicAuth Starter</title>
+        <title>Next.Js SQL app</title>
       </Head>
       <NavBar></NavBar>
       <Component {...pageProps} />
