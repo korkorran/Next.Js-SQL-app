@@ -1,0 +1,31 @@
+$navbar-breakpoint:700px;
+
+@import 'bulma/bulma';
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.page {
+  margin: 20px 15px 20px 15px;
+}
+
+.box {
+  margin: 20px
+}
+
+.is-parent {
+  flex-wrap: wrap;
+}
+
+.navbar.is-spaced .loggedAvatar {
+  background: no-repeat center center;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid $white;
+  margin-right: 20%;
+}
