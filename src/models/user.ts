@@ -3,8 +3,22 @@ import Envs, { development } from '../../knexfile'
 import {User} from '../utils/types'
 import bcrypt from 'bcrypt'
 
+
+const util = require('util')
+
 const environment = process.env.KNEX_ENV || 'development'
 const knex = Knex(Envs[environment])
+
+function translateDateInUser(user : User) {
+  let newUser = user;
+  if(user.created_at instanceof Date){
+    newUser.created_at = user.created_at.toLocaleString()
+  }
+  if(user.updated_at instanceof Date){
+    newUser.updated_at = user.updated_at.toLocaleString()
+  }
+  return newUser
+}
 
 export async function list() {
   const users = await knex.select().from('user')
@@ -28,7 +42,7 @@ export async function userInfoIfPassWordValid(email : string, password){
   const match = await bcrypt.compare(password, user.passwordHash)
   if ( match) {
     delete(user.passwordHash)
-    return user
+    return translateDateInUser(user)
   }
   else {
     return null
@@ -43,13 +57,13 @@ export async function isPassWordValid(id : number, password){
 
 
 export async function userInfo(id : number){
-  const user = await knex<User>('user').select().where({id : id}).first()
-  return user
+  let user = await knex<User>('user').select().where({id : id}).first()
+  return translateDateInUser(user)
 }
 
 export async function userInfoFromUsername(username : string){
   const user = await knex<User>('user').select().where({username : username}).first()
-  return user
+  return translateDateInUser(user)
 }
 
 export async function updatePassword(id : number, password : string){
