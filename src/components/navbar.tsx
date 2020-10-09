@@ -57,7 +57,9 @@ const NavBar = () => {
         <div className="navbar-item has-dropdown is-hoverable">
           <div 
             className="loggedAvatar navbar-link is-arrowless" 
-            style={{ backgroundImage: `url("${user.profilePictureURL}")`}} 
+            style={{ backgroundImage: `url("${
+              user.profilePictureURL ? user.profilePictureURL : '/undraw_male_avatar_323b.svg'
+            }")`}} 
             >
                     
           </div>

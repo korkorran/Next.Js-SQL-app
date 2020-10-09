@@ -24,7 +24,9 @@ const Profile = ({user} : InferGetStaticPropsType<typeof getStaticProps>) => {
               <div 
                 className="bigAvatar" 
                 style={{ 
-                  backgroundImage: `url("${user.profilePictureURL}")`,
+                  backgroundImage: `url("${
+                    user.profilePictureURL ? user.profilePictureURL : '/undraw_male_avatar_323b.svg'
+                  }")`,
                 }} 
                 />
               <h3 className="title is-3 has-text-centered">{user.username}</h3>
