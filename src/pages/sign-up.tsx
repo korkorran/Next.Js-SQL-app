@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from 'next/router'
+import useAuth from "../contexts/auth"
 import Axios from "axios";
 
 type FormData = {
@@ -11,38 +12,19 @@ type FormData = {
 };
 
 
-export default () => {
+const SignUp = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const [error, setError] = useState(null)
   const router = useRouter()
+  const { signup } = useAuth();
 
   const onSubmit = async (data : FormData) => {
-    try {
-      const response = await Axios.post("/api/sign-up", data)
-      setError(null)
-      router.push('/')
-    }
-    catch (error) {
-      // Error 😨
-      if (error.response) {
-        /*
-        * The request was made and the server responded with a
-        * status code that falls out of the range of 2xx
-        */
-        setError(error.response.data.response)
-      } else if (error.request) {
-          /*
-          * The request was made but no response was received, `error.request`
-          * is an instance of XMLHttpRequest in the browser and an instance
-          * of http.ClientRequest in Node.js
-          */
-          setError("Network error")
-      } else {
-          // Something happened in setting up the request and triggered an Error
-          setError("Request error")
-      }
-    }
+    console.log(data)
+    const error = await signup(data.email, data.username, data.password, data.passwordConfirm)
+    setError(error)
+    if(error == null) router.push('/')
   };
+
   return (
     <div className="columns is-mobile is-centered">
       <div className="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd">
@@ -139,3 +121,5 @@ export default () => {
       </div>
     )
 }
+
+export default SignUp;

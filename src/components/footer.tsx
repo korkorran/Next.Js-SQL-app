@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default () => (
+const Footer = () => (
   <footer className="footer">
     <div className="content has-text-centered">
       Powered by  
@@ -13,3 +13,5 @@ export default () => (
     </div>
   </footer>
 )
+
+export default Footer

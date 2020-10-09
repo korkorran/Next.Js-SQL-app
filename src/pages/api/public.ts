@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import {main} from '../../models/user'
 
 export default async (req: NextApiRequest, res: NextApiResponse<string>) => {
     if (req.method === 'GET') {
-      await main()
       res.status(200).send(`
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
       Sed non risus. 

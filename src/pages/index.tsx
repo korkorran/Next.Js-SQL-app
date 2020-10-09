@@ -5,7 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 import Axios from 'axios';
 import Link from 'next/link';
 
-export default () => (
+const Index = () => (
   <div className="columns is-mobile is-centered">
     <div className="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd">
       <section className="hero is-medium">
@@ -21,3 +21,4 @@ export default () => (
   </div>
 )
 
+export default Index;

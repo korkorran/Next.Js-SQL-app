@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useRouter } from 'next/router'
-import Axios from "axios";
 import useAuth from "../contexts/auth"
 
 type FormData = {
@@ -10,7 +9,7 @@ type FormData = {
 };
 
 
-export default () => {
+const LogIn = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const [error, setError] = useState(null)
   const router = useRouter()
@@ -81,4 +80,4 @@ export default () => {
     </div>
   )}
   
-  
+export default LogIn;

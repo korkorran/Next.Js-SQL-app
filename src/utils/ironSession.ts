@@ -9,7 +9,7 @@ export type NextIronApiRequest = NextApiRequest & {
   session: {
     get ( user : string) : UserSession,
     set (user : string, session : UserSession) : void,
-    save () : void
+    save () : Promise<void>
   }
 };
 

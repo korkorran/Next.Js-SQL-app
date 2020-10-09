@@ -1,18 +1,28 @@
-export type UserData = {
-    id : number;
-    username : string;
-    profilePictureURL : string;
-    createdAt: string;
-    isConfirmed: boolean;
-  }
-  
+
+export type User = {
+  id : number,
+  email : string,
+  passwordHash? : string,
+  username : string,
+  bio : string,
+  profilePictureURL : string,
+  created_at : string,
+  updated_at : string,
+  isEmailConfirmed : boolean
+}
+
 export type LoginResponse = {
     response: string;
     authenticated : boolean;
-    user? : UserData;
+    user? : User;
   }
 
 export type SignupResponse = {
   response: string, 
-  register : boolean
+  register : boolean,
+  user? : User;
+}
+
+export type Response = {
+  response: string, 
 }

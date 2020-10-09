@@ -103,7 +103,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 _This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app)._
 
-
 [![Deploy with Vercel](https://zeit.co/button)](https://zeit.co/new/project?template=https://github.com/Fredestrik/Next.Js-SQL-app)
 
 It can also be deployed locally with `npm run build & npm start` command.
@@ -111,6 +110,13 @@ It can also be deployed locally with `npm run build & npm start` command.
 Be sure to set the environment variable to enable next-iron encryption of the sessions cookies.
 
 To do that, copy the ```.env.example```file into ```.env```, and set your own 32 character long password for IRON_PASSWORD.
+
+### environments database
+
+* development : set ```KNEX_ENV``` to development. SQLite3 stored in file ```./dev.sqlite3```
+* production : set ```KNEX_ENV``` to production. PostgreSQL whose credentials are env variables PG_HOST, PG_DATABASE, PG_USER, PG_PASSWORD
+
+edit ```knexfile.js``` to change database connections
 
 ## API docs
 

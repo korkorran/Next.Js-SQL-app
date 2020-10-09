@@ -2,7 +2,7 @@ import Link from 'next/link'
 import useAuth from "../contexts/auth"
 import {useState} from 'react'
 
-export default () =>{
+const NavBar = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const [isClicked, setIsClicked] = useState<boolean>(false);
   function toggleMenu() {
@@ -62,6 +62,10 @@ export default () =>{
                     
           </div>
           <div className="navbar-dropdown is-right">
+            <Link href={`/profile/${user.username}`} >
+              <a className="navbar-item">Profile</a>
+            </Link>
+            <hr className="navbar-divider"></hr>
             <Link href="/settings" >
               <a className="navbar-item">Settings</a>
             </Link>
@@ -82,3 +86,5 @@ export default () =>{
 
 </nav>
 )}
+
+export default NavBar
