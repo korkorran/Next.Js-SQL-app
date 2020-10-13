@@ -1,3 +1,20 @@
+import { NextApiRequest} from 'next'
+import ORM from './ORM'
+
+type UserSession = {
+  id : number,
+  admin : boolean
+}
+
+export type ApiRequest = NextApiRequest & {
+  session: {
+    get ( user : string) : UserSession,
+    set (user : string, session : UserSession) : void,
+    save () : Promise<void>
+  },
+  ORM: ORM
+};
+
 
 export type User = {
   id : number,

@@ -1,14 +1,13 @@
 import { NextApiResponse } from 'next'
 import { withIronSession } from "next-iron-session";
-import {ironSessionOptions, NextIronApiRequest} from '../../../utils/ironSession'
-import {LoginResponse} from '../../../utils/types'
-import {userInfoIfPassWordValid} from '../../../models/user'
+import {ironSessionOptions} from '../../../utils/ironSession'
+import {LoginResponse, ApiRequest} from '../../../utils/types'
+import connectionHandler from '../../../utils/connectionHandler'
 
-
-async function handler (req: NextIronApiRequest, res: NextApiResponse<LoginResponse>) {
+async function handler (req: ApiRequest, res: NextApiResponse<LoginResponse>) {
   if (req.method === 'POST') {
     const {email, password} = req.body
-    const user = await userInfoIfPassWordValid(email, password);
+    const user = await req.ORM.user.userInfoIfPassWordValid(email, password);
     if (user) {
       req.session.set("user", {
         id: user.id,
@@ -28,4 +27,4 @@ async function handler (req: NextIronApiRequest, res: NextApiResponse<LoginRespo
 }
 
 
-export default withIronSession(handler, ironSessionOptions)
+export default withIronSession(connectionHandler()(handler), ironSessionOptions)

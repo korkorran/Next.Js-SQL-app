@@ -1,14 +1,14 @@
 import { NextApiResponse } from 'next'
 import { withIronSession } from "next-iron-session";
-import {ironSessionOptions, NextIronApiRequest} from '../../../utils/ironSession'
-import {User} from '../../../utils/types'
-import {userInfo} from '../../../models/user'
+import {ironSessionOptions} from '../../../utils/ironSession'
+import {User, ApiRequest} from '../../../utils/types'
+import connectionHandler from '../../../utils/connectionHandler'
 
 
-async function handler (req: NextIronApiRequest, res: NextApiResponse<User>) {
+async function handler (req: ApiRequest, res: NextApiResponse<User>) {
   if (req.method === 'GET') {
     const userSession = req.session.get("user");
-    const user = await userInfo(userSession.id)
+    const user = await req.ORM.user.userInfo(userSession.id)
     if(user) {
       res.status(200).json(user)
     }
@@ -21,4 +21,4 @@ async function handler (req: NextIronApiRequest, res: NextApiResponse<User>) {
   }
 }
 
-export default withIronSession(handler, ironSessionOptions)
+export default withIronSession(connectionHandler()(handler), ironSessionOptions)

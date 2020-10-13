@@ -39,9 +39,9 @@ Fully compatible with PostgreSQL, MySQL & SQLite
 
 <div align="center">
 
-- [x] Email verification
+- [x] Email verification *TODO*
 - [x] Password change
-- [x] Password reset
+- [x] Password reset *TODO*
 
 </div>
 
@@ -50,7 +50,7 @@ Fully compatible with PostgreSQL, MySQL & SQLite
 <div align="center">
 
 - [x] Other user profile
-- [x] Posting
+- [x] Posting  *TODO*
 
 </div>
 
@@ -124,11 +124,13 @@ _All the API endpoints work within Next.js API routes. They can be found in `src
 
 URL| HTTP method | returned Type | Public | Description
 -|-|-|-|-
-`/api/log-in` | `POST` | `LoginResponse` | ✅ | If the user is successfully authentified or not. Gives also details about the user.
-`/api/me` | `GET` | `UserData`| ❌ | Details about the user
+`/api/user/log-in` | `POST` | `LoginResponse` | ✅ | If the user is successfully authentified or not. Gives also details about the user.
+`/api/user/sign-up` | `POST` | `SignupResponse` | ✅ | If the user is successfully registered or not. *Not effective*.
+`/api/user/me` | `GET` | `User`| ❌ | Details about the user
+`/api/user/passwordreset` | `GET` | `response`| ❌ | If the password has been changed
+`/api/user/bioreset` | `GET` | `response`| ❌ | If the bio has been changed
 `/api/private` | `GET` | `string` | ❌ | Example text
 `/api/public`| `GET` | `string` | ✅| Example text
-`/api/sign-up` | `POST` | `SignupResponse` | ✅ | If the user is successfully registered or not. *Not effective*.
 
 ## Further work
 

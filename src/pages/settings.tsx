@@ -18,7 +18,9 @@ function Settings() {
             {!loading && 
                 <div 
                 className="bigAvatar" 
-                style={{ backgroundImage: `url("${user.profilePictureURL}")`}} 
+                style={{ backgroundImage: `url("${
+                  user.profilePictureURL ? user.profilePictureURL : '/undraw_male_avatar_323b.svg'
+                }")`}} 
                 />
             }
           </div>

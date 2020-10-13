@@ -3,12 +3,6 @@ import Envs, { development } from '../../knexfile'
 import {User} from '../utils/types'
 import bcrypt from 'bcrypt'
 
-
-const util = require('util')
-
-const environment = process.env.KNEX_ENV || 'development'
-const knex = Knex(Envs[environment])
-
 function translateDateInUser(user : User) {
   let newUser = user;
   if(user.created_at instanceof Date){
@@ -20,68 +14,77 @@ function translateDateInUser(user : User) {
   return newUser
 }
 
-export async function list() {
-  const users = await knex.select().from('user')
-  return users;
-}
+export default class UserModel {
+  private knex : Knex
+
+  constructor(knexInstance : Knex) {
+    this.knex = knexInstance;
+  }
+
+  
+  async list() : Promise<Array<User>> {
+    const users = await this.knex.select().from('user')
+    return users;
+  }
+
+  async registerUser(username : string, email : string, password : string) {
+    const hash = await bcrypt.hash(password, 10)
+    const id = await this.knex.returning('id').insert({
+      username: username,
+      email: email,
+      passwordHash: hash,
+      isEmailConfirmed : false
+    }).into('user');
+    return id[0];
+  }
+
+  async userInfoIfPassWordValid(email : string, password : string){
+    const user = await this.knex<User>('user').select().where({email : email}).first()
+    const match = await bcrypt.compare(password, user.passwordHash)
+    if ( match) {
+      delete(user.passwordHash)
+      return translateDateInUser(user)
+    }
+    else {
+      return null
+    }
+  }
+
+  async isPassWordValid(id : number, password){
+    const user = await this.knex<User>('user').select().where({id : id}).first()
+    const match = await bcrypt.compare(password, user.passwordHash)
+    return ( match )
+  }
 
 
-export async function registerUser(username, email, password) {
-  const hash = await bcrypt.hash(password, 10)
-  const id = await knex.returning('id').insert({
-    username: username,
-    email: email,
-    passwordHash: hash,
-    isEmailConfirmed : false
-  }).into('user');
-  return id[0];
-}
-
-export async function userInfoIfPassWordValid(email : string, password){
-  const user = await knex<User>('user').select().where({email : email}).first()
-  const match = await bcrypt.compare(password, user.passwordHash)
-  if ( match) {
-    delete(user.passwordHash)
+  async userInfo(id : number){
+    let user = await this.knex<User>('user').select().where({id : id}).first()
     return translateDateInUser(user)
   }
-  else {
-    return null
+
+  async userInfoFromUsername(username : string){
+    const user = await this.knex<User>('user').select().where({username : username}).first()
+    return translateDateInUser(user)
   }
-}
 
-export async function isPassWordValid(id : number, password){
-  const user = await knex<User>('user').select().where({id : id}).first()
-  const match = await bcrypt.compare(password, user.passwordHash)
-  return ( match )
-}
+  async updatePassword(id : number, password : string){
+    const hash = await bcrypt.hash(password, 10)
+    await this.knex<User>('user').where({id : id}).update({passwordHash: hash})
+  }
 
+  async emailExists(email : string){
+    const user = await this.knex<User>('user').select().where({email : email}).first()
+    console.log(user)
+    return (user != null)
+  }
 
-export async function userInfo(id : number){
-  let user = await knex<User>('user').select().where({id : id}).first()
-  return translateDateInUser(user)
-}
+  async usernameExists(username : string){
+    const user = await this.knex<User>('user').select().where({username : username}).first()
+    return (user != null)
+  }
 
-export async function userInfoFromUsername(username : string){
-  const user = await knex<User>('user').select().where({username : username}).first()
-  return translateDateInUser(user)
-}
+  async updateBio(id : number, bio : string){
+    await this.knex<User>('user').where({id : id}).update({bio: bio})
+  }
 
-export async function updatePassword(id : number, password : string){
-  const hash = await bcrypt.hash(password, 10)
-  await knex<User>('user').where({id : id}).update({passwordHash: hash})
-}
-
-export async function emailExists(email : string){
-  const user = await knex<User>('user').select().where({email : email}).first()
-  console.log(user)
-  return (user != null)
-}
-
-export async function usernameExists(username : string){
-  const user = await knex<User>('user').select().where({username : username}).first()
-  return (user != null)
-}
-
-export async function updateBio(id : number, bio : string){
-  await knex<User>('user').where({id : id}).update({bio: bio})
 }

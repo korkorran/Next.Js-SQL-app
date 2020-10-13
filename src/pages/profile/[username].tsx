@@ -1,9 +1,10 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import {User} from '../../utils/types'
-import {userInfoFromUsername} from '../../models/user'
+import UserORM from '../../models/user'
+import { getDatabaseConnector } from '../../utils/dbInjector';
 import { useRouter } from 'next/router'
 import Skeleton from 'react-loading-skeleton';
-
+const connector = getDatabaseConnector();
 
 const Profile = ({user} : InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter()
@@ -52,19 +53,21 @@ type Params = {
 }
 
 export const getStaticProps : GetStaticProps<{user :User}, Params> = async (context) => {
-    const username = context.params.username
-    const user = await userInfoFromUsername(username)
-    return {
-      props: {user}, // will be passed to the page component as props
-      revalidate : 1,
-    }
+  const db = connector();
+  const userORM = new UserORM(db);
+  const username = context.params.username
+  const user = await userORM.userInfoFromUsername(username)
+  return {
+    props: {user}, // will be passed to the page component as props
+    revalidate : 1,
   }
+}
 
-  export async function getStaticPaths() {
-    return {
-      paths: [],
-      fallback: true,
-    }
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: true,
   }
+}
 
 export default Profile;

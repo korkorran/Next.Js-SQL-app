@@ -1,13 +1,13 @@
 import { NextApiResponse } from 'next'
 import { withIronSession } from "next-iron-session";
-import {ironSessionOptions, NextIronApiRequest} from '../../utils/ironSession'
-import {list} from '../../models/user'
+import {ironSessionOptions} from '../../utils/ironSession'
+import {ApiRequest} from '../../utils/types'
 
 
-async function handler (req: NextIronApiRequest, res: NextApiResponse<string>) {
+async function handler (req: ApiRequest, res: NextApiResponse<string>) {
   if (req.method === 'GET') {
     const user = req.session.get("user");
-    console.log(await list())
+
     if(user) {
       res.status(200).json(` 
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
