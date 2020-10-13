@@ -125,7 +125,7 @@ _All the API endpoints work within Next.js API routes. They can be found in `src
 URL| HTTP method | returned Type | Public | Description
 -|-|-|-|-
 `/api/user/log-in` | `POST` | `LoginResponse` | ✅ | If the user is successfully authentified or not. Gives also details about the user.
-`/api/user/sign-up` | `POST` | `SignupResponse` | ✅ | If the user is successfully registered or not. *Not effective*.
+`/api/user/sign-up` | `POST` | `SignupResponse` | ✅ | If the user is successfully registered or not. 
 `/api/user/me` | `GET` | `User`| ❌ | Details about the user
 `/api/user/passwordreset` | `GET` | `response`| ❌ | If the password has been changed
 `/api/user/bioreset` | `GET` | `response`| ❌ | If the bio has been changed
