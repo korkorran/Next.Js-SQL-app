@@ -57,6 +57,7 @@ export const getStaticProps : GetStaticProps<{user :User}, Params> = async (cont
   const userORM = new UserORM(db);
   const username = context.params.username
   const user = await userORM.userInfoFromUsername(username)
+  await db.destroy()
   return {
     props: {user}, // will be passed to the page component as props
     revalidate : 1,
