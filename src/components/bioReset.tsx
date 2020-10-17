@@ -1,16 +1,19 @@
 import { useForm } from "react-hook-form";
 import {useState} from 'react'
-import Axios from 'axios'
-import useAuth from '../contexts/auth'
+import Axios, { AxiosResponse } from 'axios'
+import {User} from '../utils/types'
+import { mutate } from 'swr'
 
 
 type FormData = {
     bio: string;
   };
 
+type BioResetProps = {
+  axiosResponse : AxiosResponse<User>
+}
 
-const BioReset = () => {
-  const { user } = useAuth();
+const BioReset = ({axiosResponse } : BioResetProps) => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const [error, setError] = useState<string>(null)
   const [success, setSuccess] = useState<string>(null)
@@ -21,6 +24,9 @@ const BioReset = () => {
       console.log(response)
       setError(null)
       setSuccess('Bio has been updated')
+      const newResponse = axiosResponse
+      newResponse.data.bio = data.bio
+      mutate('/api/user/me', newResponse, false)
     }
     catch (error) {
       setSuccess(null)
@@ -47,7 +53,7 @@ const BioReset = () => {
             name="bio"
             ref={register({ required: true })}
             >
-              {user.bio}
+              {axiosResponse.data.bio}
           </textarea>
       </div>
       { errors.bio && 

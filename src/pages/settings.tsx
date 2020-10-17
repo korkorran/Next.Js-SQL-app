@@ -1,13 +1,16 @@
-import useAuth, { ProtectRoute } from '../contexts/auth'
+import useSWR, { mutate } from 'swr'
+import Axios, { AxiosError, AxiosResponse } from 'axios'
+import { ProtectRoute } from '../contexts/auth'
 import Skeleton from 'react-loading-skeleton';
 import PasswordReset from '../components/passwordReset'
 import BioReset from '../components/bioReset'
+import {User} from '../utils/types'
 
 
 function Settings() {
-
-  const { user, loading } = useAuth();
-
+  const {data , error} = useSWR<AxiosResponse<User>, AxiosError<User>>('/api/user/me', Axios.get)
+  const user = data?.data
+  const loading = !user
 
   return (
     <div className="columns is-mobile is-centered">
@@ -22,6 +25,9 @@ function Settings() {
                   user.profilePictureURL ? user.profilePictureURL : '/undraw_male_avatar_323b.svg'
                 }")`}} 
                 />
+            }
+            { error && 
+              <p> {error.message} </p>
             }
           </div>
         </section>
@@ -60,7 +66,7 @@ function Settings() {
                       </tr>
                       <tr>
                           <th> bio</th>
-                          <td> <BioReset /> </td>
+                          <td> <BioReset axiosResponse={data} /> </td>
                       </tr>
                   </tbody>
                   
