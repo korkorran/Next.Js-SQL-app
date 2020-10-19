@@ -1,8 +1,8 @@
 import { NextApiResponse } from 'next'
 import { withIronSession } from "next-iron-session";
-import {ironSessionOptions} from '../../../utils/ironSession'
-import {Response, ApiRequest} from '../../../utils/types'
-import connectionHandler from '../../../utils/connectionHandler'
+import {ironSessionOptions} from 'utils/ironSession'
+import {Response, ApiRequest} from 'utils/types'
+import connectionHandler from 'utils/connectionHandler'
 
 
 

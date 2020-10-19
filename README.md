@@ -120,7 +120,7 @@ edit ```knexfile.js``` to change database connections
 
 ## API docs
 
-_All the API endpoints work within Next.js API routes. They can be found in `src/pages/api` folder. The complex types of JSON body returned by API endpoints can be found in the [`src/utils/types.ts`](https://github.com/Fredestrik/Next.Js-SQL-app/blob/master/src/utils/types.ts) file._
+_All the API endpoints work within Next.js API routes. They can be found in `src/pages/api` folder. The complex types of JSON body returned by API endpoints can be found in the [`src/utils/types.d.ts`](https://github.com/Fredestrik/Next.Js-SQL-app/blob/master/src/utils/types.ts) file._
 
 URL| HTTP method | returned Type | Public | Description
 -|-|-|-|-
