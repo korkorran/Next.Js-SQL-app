@@ -7,9 +7,11 @@
     "debug": "NODE_OPTIONS='--inspect' next dev",
     "build": "npm run migrate:production && next build",
     "start": "next start",
-    "migrate": "knex migrate:latest",
+    "migrate:dev": "knex migrate:latest",
     "migrate:production": "knex --env production migrate:latest",
-    "seed": "knex seed:run"
+    "seed:dev": "knex seed:run",
+    "seed:production": "knex --env production seed:run",
+    "seed:production:post": "knex --env production seed:run --specific 02-post.js",
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.0",
