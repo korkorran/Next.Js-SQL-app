@@ -1,6 +1,5 @@
 import Knex from 'knex'
-import Envs, { development } from '../../knexfile'
-import {User} from '../utils/types'
+import {User} from 'utils/types'
 import bcrypt from 'bcrypt'
 
 function translateDateInUser(user : User) {

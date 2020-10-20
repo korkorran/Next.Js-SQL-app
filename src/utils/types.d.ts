@@ -28,6 +28,19 @@ export type User = {
   isEmailConfirmed : boolean
 }
 
+export type Post = {
+  id : number,
+  content : string,
+  author : number,
+  created_at : string | Date,
+  updated_at : string | Date
+}
+
+export type PostWithAuthorInfo = Post & {
+  author_username : string,
+  author_pictureURL : string
+}
+
 export type LoginResponse = {
     response: string;
     authenticated : boolean;
@@ -43,3 +56,5 @@ export type SignupResponse = {
 export type Response = {
   response: string, 
 }
+
+export type PostIndexResponse = Post[]

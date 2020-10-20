@@ -11,7 +11,7 @@
     "migrate:production": "knex --env production migrate:latest",
     "seed:dev": "knex seed:run",
     "seed:production": "knex --env production seed:run",
-    "seed:production:post": "knex --env production seed:run --specific 02-post.js",
+    "seed:production:post": "knex --env production seed:run --specific 02-post.js"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.0",

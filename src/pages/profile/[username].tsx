@@ -1,12 +1,18 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import {User} from '../../utils/types'
-import UserORM from '../../models/user'
-import { getDatabaseConnector } from '../../utils/dbInjector';
+import {PostWithAuthorInfo, User} from 'utils/types'
+import UserORM from 'models/user'
+import { getDatabaseConnector } from 'utils/dbInjector';
 import { useRouter } from 'next/router'
 import Skeleton from 'react-loading-skeleton';
+import useSWR from 'swr';
+import Axios, { AxiosError, AxiosResponse } from 'axios';
+import PostCard from 'components/postCard'
 const connector = getDatabaseConnector();
 
 const Profile = ({user} : InferGetStaticPropsType<typeof getStaticProps>) => {
+  const {data , error} = useSWR<AxiosResponse<PostWithAuthorInfo[]>, AxiosError<PostWithAuthorInfo[]>>('/api/post/', Axios.get)
+  const posts = data?.data
+
   const router = useRouter()
   const loading = router.isFallback
 
@@ -22,22 +28,24 @@ const Profile = ({user} : InferGetStaticPropsType<typeof getStaticProps>) => {
                 width : "300px",
                 margin:"auto"
                 }}>
-              <div 
-                className="bigAvatar" 
-                style={{ 
-                  backgroundImage: `url("${
-                    user.profilePictureURL ? user.profilePictureURL : '/undraw_male_avatar_323b.svg'
-                  }")`,
-                }} 
-                />
-              <h3 className="title is-3 has-text-centered">{user.username}</h3>
-              <p className="subtitle is-size-6 has-text-centered">{user.created_at}</p>
-              <p className="has-text-centered">{user.bio}</p>
+                <div 
+                  className="bigAvatar" 
+                  style={{ 
+                    backgroundImage: `url("${
+                      user.profilePictureURL ? user.profilePictureURL : '/undraw_male_avatar_323b.svg'
+                    }")`,
+                  }} 
+                  />
+                <h3 className="title is-3 has-text-centered">{user.username}</h3>
+                <p className="subtitle is-size-6 has-text-centered">{user.created_at}</p>
+                <p className="has-text-centered">{user.bio}</p>
               </div>
               <h1 className="title">
-                  No Posts
+                  Posts
               </h1>
-
+              { posts && posts?.map(post => (
+                <PostCard post={post} />
+              ))}
               </>
               }
           </div>
