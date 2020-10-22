@@ -7,6 +7,7 @@ import Skeleton from 'react-loading-skeleton';
 import useSWR from 'swr';
 import Axios, { AxiosError, AxiosResponse } from 'axios';
 import PostCard from 'components/postCard'
+import moment from 'moment'
 const connector = getDatabaseConnector();
 
 const Profile = ({user} : InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -37,14 +38,14 @@ const Profile = ({user} : InferGetStaticPropsType<typeof getStaticProps>) => {
                   }} 
                   />
                 <h3 className="title is-3 has-text-centered">{user.username}</h3>
-                <p className="subtitle is-size-6 has-text-centered">{user.created_at}</p>
+                <p className="subtitle has-text-centered"> <small>{moment(user.created_at).format('LL')}</small></p>
                 <p className="has-text-centered">{user.bio}</p>
               </div>
               <h1 className="title">
                   Posts
               </h1>
               { posts && posts?.map(post => (
-                <PostCard post={post} />
+                <PostCard key={post.id} post={post} />
               ))}
               </>
               }

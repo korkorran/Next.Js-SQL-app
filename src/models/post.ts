@@ -28,6 +28,7 @@ export default class PostModel {
             builder.where('user.id', author)
           }
         })
+        .orderBy('post.created_at', 'desc')
         .select(
             'post.id', 
             'post.content', 
@@ -39,4 +40,13 @@ export default class PostModel {
         )
     return posts.map( post => translateDateInPost(post));
   }
+
+  async insertPost(content : string, author : number) {
+    const id = await this.knex.returning('id').insert({
+      content: content,
+      author : author
+    }).into('post');
+    return id[0];
+  }
+
 }

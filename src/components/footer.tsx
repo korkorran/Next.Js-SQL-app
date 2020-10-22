@@ -9,7 +9,11 @@ const Footer = () => (
             Next.Js SQL App
           </a>
         </Link>
-      <p><a href="https://github.com/Fredestrik/Next.Js-SQL-app"><i className="fab fa-github"></i></a></p>
+      <p>
+        <a href="https://github.com/Fredestrik/Next.Js-SQL-app" suppressHydrationWarning={true}>
+          <i className="fab fa-github"></i>
+        </a>
+      </p>
     </div>
   </footer>
 )

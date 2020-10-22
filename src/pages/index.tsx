@@ -1,4 +1,5 @@
 import PostCard from 'components/postCard'
+import NewPost from 'components/newPost'
 import useSWR, { mutate } from 'swr'
 import Skeleton from 'react-loading-skeleton';
 import Axios, { AxiosError, AxiosResponse } from 'axios';
@@ -13,15 +14,16 @@ const Index = () => {
   return (
   <div className="columns is-mobile is-centered">
     <div className="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop">
-      <section className="hero is-medium">
+      <section className="hero">
         <div className="hero-body">
           <div className="container">
           <h1 className="title">
               All post from the web!
           </h1>
           </div>
+          <NewPost />
           { posts && posts?.map(post => (
-            <PostCard post={post} />
+            <PostCard key={post.id} post={post} />
           ))}
         </div>
       </section>

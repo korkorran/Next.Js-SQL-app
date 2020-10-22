@@ -1,11 +1,22 @@
 import Link from 'next/link'
 import {PostWithAuthorInfo} from 'utils/types'
+import moment from 'moment'
 
 type PostCardProps = {
   post : PostWithAuthorInfo
 }
 
-const PostCard = ({post} : PostCardProps) => (
+const PostCard = ({post} : PostCardProps) =>{ 
+  const m = moment(post.created_at)
+  let formattedDate = '';
+  if (m.isAfter(moment().subtract(7, 'days'))) {
+    formattedDate = m.fromNow()
+  }
+  else {
+    formattedDate = m.format('llll');
+  }
+
+  return (
   <article className="media article">
     <figure className="media-left">
       <p className="image is-64x64">
@@ -15,8 +26,12 @@ const PostCard = ({post} : PostCardProps) => (
     <div className="media-content">
       <div className="content">
         <p>
-          <strong>{post.author_username}</strong> &ensp;
-          <small>{post.created_at}</small>
+          <Link href={`/profile/${post.author_username}`}>
+            <a>
+            <strong>{post.author_username}</strong> &ensp;
+            </a>
+          </Link>
+          <small>{formattedDate}</small>
           <br/>
           { post.content}
         </p>
@@ -36,6 +51,6 @@ const PostCard = ({post} : PostCardProps) => (
       </nav>
     </div>
   </article>
-)
+)}
 
 export default PostCard
