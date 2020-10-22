@@ -30,7 +30,7 @@ Fully compatible with PostgreSQL, MySQL & SQLite
 
 <div align="center">
 
-- [x] Profile picture, name, bio, email
+- [x] Profile picture, name, bio, registration date
 - [x] Edit profile
 
 </div>
@@ -50,7 +50,7 @@ Fully compatible with PostgreSQL, MySQL & SQLite
 <div align="center">
 
 - [x] Other user profile
-- [x] Posting  *TODO*
+- [x] Posting
 
 </div>
 

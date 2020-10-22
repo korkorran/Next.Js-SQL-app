@@ -42,7 +42,7 @@ const BioReset = () => {
           <textarea
             className="textarea" 
             placeholder="Your message"
-            rows='3'
+            rows={3}
             name="content"
             ref={register({ required: true })}
             >
