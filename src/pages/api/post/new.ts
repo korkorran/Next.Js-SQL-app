@@ -1,11 +1,11 @@
 import { NextApiResponse } from 'next'
-import {Response, ApiRequest} from '../../../utils/types'
+import {NewPostResponse, ApiRequest} from 'utils/types'
 import { withIronSession } from "next-iron-session";
-import {ironSessionOptions} from '../../../utils/ironSession'
-import connectionHandler from '../../../utils/connectionHandler'
+import {ironSessionOptions} from 'utils/ironSession'
+import connectionHandler from 'utils/connectionHandler'
 
 
-const handler = async (req: ApiRequest, res: NextApiResponse<Response>) => {
+const handler = async (req: ApiRequest, res: NextApiResponse<NewPostResponse>) => {
     if (req.method === 'POST') {
       // Process a POST request
       const {content} = req.body
@@ -18,7 +18,8 @@ const handler = async (req: ApiRequest, res: NextApiResponse<Response>) => {
       }
       else {
         const id = await req.ORM.post.insertPost(content, userSession.id)
-        res.status(200).json({ response : "OK" })
+        const post = await req.ORM.post.oneWithAuthor(id);
+        res.status(200).json({ response : "OK", post : post })
       }
     } else {
       // Handle any other HTTP method

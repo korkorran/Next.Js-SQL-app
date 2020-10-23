@@ -1,24 +1,35 @@
 import { useForm } from "react-hook-form";
 import {useState} from 'react'
 import Axios, { AxiosResponse } from 'axios'
-import {Post} from '../utils/types'
-
+import {PostWithAuthorInfo, NewPostResponse} from 'utils/types'
+import { mutate } from 'swr'
 
 type FormData = {
-    content: string;
-  };
+  content: string;
+};
 
-
-const BioReset = () => {
+const NewPost = () => {
   const { register, handleSubmit, errors } = useForm<FormData>();
   const [error, setError] = useState<string>(null)
   const [success, setSuccess] = useState<string>(null)
 
   const onSubmit = async (data : FormData) => {
     try {
-      const response = await Axios.post('api/post/new', data)
+      const response = await Axios.post<NewPostResponse>('api/post/new', data)
       setError(null)
       setSuccess('Message has been posted')
+      mutate('/api/post/', async (data : AxiosResponse<PostWithAuthorInfo[]>) => {
+        if(!data) {
+          console.log('No Cache')
+          return null;
+        }
+        if(!data?.data) {
+          console.log('no posts saved in Cache.')
+          return data
+        }
+        data.data = [response.data.post]
+        return data
+      })
     }
     catch (error) {
       setSuccess(null)
@@ -68,4 +79,4 @@ const BioReset = () => {
     </form>
 )}
 
-export default BioReset;
+export default NewPost;

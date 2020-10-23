@@ -11,7 +11,7 @@ import moment from 'moment'
 const connector = getDatabaseConnector();
 
 const Profile = ({user} : InferGetStaticPropsType<typeof getStaticProps>) => {
-  const {data , error} = useSWR<AxiosResponse<PostWithAuthorInfo[]>, AxiosError<PostWithAuthorInfo[]>>('/api/post/', Axios.get)
+  const {data , error} = useSWR<AxiosResponse<PostWithAuthorInfo[]>, AxiosError<PostWithAuthorInfo[]>>(`/api/post/?author=${user.id}`, Axios.get)
   const posts = data?.data
 
   const router = useRouter()

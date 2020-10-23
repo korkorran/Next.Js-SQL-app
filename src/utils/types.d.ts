@@ -57,4 +57,9 @@ export type Response = {
   response: string, 
 }
 
-export type PostIndexResponse = Post[]
+export type NewPostResponse = {
+  response: string,
+  post? : PostWithAuthorInfo
+}
+
+export type PostIndexResponse = PostWithAuthorInfo[]

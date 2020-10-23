@@ -1,15 +1,18 @@
 import Knex from 'knex'
 import {Post, PostWithAuthorInfo} from 'utils/types'
 
-function translateDateInPost(post : Post) {
-  let newPost = post;
+interface PostInterface {
+  created_at : string | Date;
+  updated_at : string | Date;
+}
+
+function translateDateInPost(post : PostInterface) {
   if(post.created_at instanceof Date){
-    newPost.created_at = post.created_at.toLocaleString()
+    post.created_at = post.created_at.toLocaleString()
   }
   if(post.updated_at instanceof Date){
-    newPost.updated_at = post.updated_at.toLocaleString()
+    post.updated_at = post.updated_at.toLocaleString()
   }
-  return newPost
 }
 
 export default class PostModel {
@@ -20,8 +23,8 @@ export default class PostModel {
   }
 
   
-  async listWithAuthor(author : number = null) : Promise<Array<Post>> {
-    const posts = await this.knex('post')
+  async listWithAuthor(author : number = null) : Promise<Array<PostWithAuthorInfo>> {
+    const posts : PostWithAuthorInfo[] = await this.knex('post')
         .join('user', 'user.id', '=', 'post.author')
         .where(builder => {
           if(author) {
@@ -38,7 +41,25 @@ export default class PostModel {
             'user.username as author_username',
             'user.profilePictureURL as author_pictureURL'
         )
-    return posts.map( post => translateDateInPost(post));
+    return posts.map( post => {translateDateInPost(post); return post});
+  }
+
+  async oneWithAuthor(id : number) : Promise<PostWithAuthorInfo> {
+    const post = await this.knex('post')
+        .join('user', 'user.id', '=', 'post.author')
+        .where('post.id', id)
+        .select(
+            'post.id', 
+            'post.content', 
+            'post.created_at', 
+            'post.updated_at', 
+            'post.author', 
+            'user.username as author_username',
+            'user.profilePictureURL as author_pictureURL'
+        )
+        .first()
+    translateDateInPost(post);
+    return post;
   }
 
   async insertPost(content : string, author : number) {

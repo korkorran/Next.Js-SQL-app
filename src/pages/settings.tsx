@@ -1,10 +1,10 @@
-import useSWR, { mutate } from 'swr'
+import useSWR from 'swr'
 import Axios, { AxiosError, AxiosResponse } from 'axios'
-import { ProtectRoute } from '../contexts/auth'
+import { ProtectRoute } from 'contexts/auth'
 import Skeleton from 'react-loading-skeleton';
-import PasswordReset from '../components/passwordReset'
-import BioReset from '../components/bioReset'
-import {User} from '../utils/types'
+import PasswordReset from 'components/passwordReset'
+import BioReset from 'components/bioReset'
+import {User} from 'utils/types'
 
 
 function Settings() {
@@ -66,7 +66,7 @@ function Settings() {
                       </tr>
                       <tr>
                           <th> bio</th>
-                          <td> <BioReset axiosResponse={data} /> </td>
+                          <td> <BioReset bio={user.bio} /> </td>
                       </tr>
                   </tbody>
                   
