@@ -1,16 +1,8 @@
-import PostCard from 'components/postCard'
+import PostCardList from 'components/postCardList'
 import NewPost from 'components/newPost'
-import useSWR, { mutate } from 'swr'
-import Skeleton from 'react-loading-skeleton';
-import Axios, { AxiosError, AxiosResponse } from 'axios';
-import {PostWithAuthorInfo} from 'utils/types'
-import Link from 'next/link';
 
-const Index = () => { 
-  const {data , error} = useSWR<AxiosResponse<PostWithAuthorInfo[]>, AxiosError<PostWithAuthorInfo[]>>('/api/post/', Axios.get)
-  const posts = data?.data
-  const loading = !posts
-  
+
+const Index = () => {   
   return (
   <div className="columns is-mobile is-centered">
     <div className="column is-three-quarters-mobile is-two-thirds-tablet is-half-desktop">
@@ -22,9 +14,7 @@ const Index = () => {
           </h1>
           </div>
           <NewPost />
-          { posts && posts?.map(post => (
-            <PostCard key={post.id} post={post} />
-          ))}
+          <PostCardList />
         </div>
       </section>
     </div>

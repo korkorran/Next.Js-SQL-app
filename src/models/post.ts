@@ -23,7 +23,11 @@ export default class PostModel {
   }
 
   
-  async listWithAuthor(author : number = null) : Promise<Array<PostWithAuthorInfo>> {
+  async listWithAuthor(
+    author : number = null,
+    offset : number = 0,
+    limit : number = 5
+  ) : Promise<Array<PostWithAuthorInfo>> {
     const posts : PostWithAuthorInfo[] = await this.knex('post')
         .join('user', 'user.id', '=', 'post.author')
         .where(builder => {
@@ -41,6 +45,8 @@ export default class PostModel {
             'user.username as author_username',
             'user.profilePictureURL as author_pictureURL'
         )
+        .offset(offset)
+        .limit(limit)
     return posts.map( post => {translateDateInPost(post); return post});
   }
 

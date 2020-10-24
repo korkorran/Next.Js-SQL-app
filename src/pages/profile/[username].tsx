@@ -1,19 +1,14 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import {PostWithAuthorInfo, User} from 'utils/types'
+import {User} from 'utils/types'
 import UserORM from 'models/user'
 import { getDatabaseConnector } from 'utils/dbInjector';
 import { useRouter } from 'next/router'
 import Skeleton from 'react-loading-skeleton';
-import useSWR from 'swr';
-import Axios, { AxiosError, AxiosResponse } from 'axios';
-import PostCard from 'components/postCard'
+import PostCardList from 'components/postCardList'
 import moment from 'moment'
 const connector = getDatabaseConnector();
 
 const Profile = ({user} : InferGetStaticPropsType<typeof getStaticProps>) => {
-  const {data , error} = useSWR<AxiosResponse<PostWithAuthorInfo[]>, AxiosError<PostWithAuthorInfo[]>>(`/api/post/?author=${user.id}`, Axios.get)
-  const posts = data?.data
-
   const router = useRouter()
   const loading = router.isFallback
 
@@ -44,9 +39,7 @@ const Profile = ({user} : InferGetStaticPropsType<typeof getStaticProps>) => {
               <h1 className="title">
                   Posts
               </h1>
-              { posts && posts?.map(post => (
-                <PostCard key={post.id} post={post} />
-              ))}
+              <PostCardList author={user.id} />
               </>
               }
           </div>
