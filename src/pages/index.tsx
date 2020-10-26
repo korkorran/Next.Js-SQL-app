@@ -1,5 +1,4 @@
 import PostCardList from 'components/postCardList'
-import NewPost from 'components/newPost'
 
 
 const Index = () => {   
@@ -13,8 +12,7 @@ const Index = () => {
               All post from the web!
           </h1>
           </div>
-          <NewPost />
-          <PostCardList />
+          <PostCardList newPost={true} />
         </div>
       </section>
     </div>

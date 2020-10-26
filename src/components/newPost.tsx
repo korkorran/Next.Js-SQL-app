@@ -2,14 +2,17 @@ import { useForm } from "react-hook-form";
 import {useState} from 'react'
 import Axios, { AxiosResponse } from 'axios'
 import {PostWithAuthorInfo, NewPostResponse} from 'utils/types'
-import { mutate } from 'swr'
 
 type FormData = {
   content: string;
 };
 
-const NewPost = () => {
-  const { register, handleSubmit, errors } = useForm<FormData>();
+type NewPostProps = {
+  updatePosts : Function
+}
+
+const NewPost = ({updatePosts} : NewPostProps) => {
+  const { register, handleSubmit, errors, reset } = useForm<FormData>();
   const [error, setError] = useState<string>(null)
   const [success, setSuccess] = useState<string>(null)
 
@@ -18,18 +21,8 @@ const NewPost = () => {
       const response = await Axios.post<NewPostResponse>('api/post/new', data)
       setError(null)
       setSuccess('Message has been posted')
-      mutate('/api/post/', async (data : AxiosResponse<PostWithAuthorInfo[]>) => {
-        if(!data) {
-          console.log('No Cache')
-          return null;
-        }
-        if(!data?.data) {
-          console.log('no posts saved in Cache.')
-          return data
-        }
-        data.data = [response.data.post]
-        return data
-      })
+      updatePosts()
+      reset()
     }
     catch (error) {
       setSuccess(null)
