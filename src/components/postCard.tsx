@@ -20,7 +20,7 @@ const PostCard = ({post} : PostCardProps) =>{
   <article className="media article">
     <figure className="media-left">
       <p className="image is-64x64">
-        <img src='/undraw_male_avatar_323b.svg' />
+        <img src={ post.author_pictureURL ? post.author_pictureURL : '/undraw_male_avatar_323b.svg' } />
       </p>
     </figure>
     <div className="media-content">

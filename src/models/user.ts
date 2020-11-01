@@ -86,4 +86,7 @@ export default class UserModel {
     await this.knex<User>('user').where({id : id}).update({bio: bio})
   }
 
+  async updatePicture(id : number, pictureURL : string){
+    await this.knex<User>('user').where({id : id}).update({profilePictureURL: pictureURL})
+  }
 }

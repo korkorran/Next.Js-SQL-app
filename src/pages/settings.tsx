@@ -4,6 +4,7 @@ import { ProtectRoute } from 'contexts/auth'
 import Skeleton from 'react-loading-skeleton';
 import PasswordReset from 'components/passwordReset'
 import BioReset from 'components/bioReset'
+import PictureUpdate from 'components/pictureUpdate'
 import {User} from 'utils/types'
 
 
@@ -19,12 +20,7 @@ function Settings() {
           <div className="hero-body">
             {loading && <Skeleton height={100}/>}
             {!loading && 
-                <div 
-                className="bigAvatar" 
-                style={{ backgroundImage: `url("${
-                  user.profilePictureURL ? user.profilePictureURL : '/undraw_male_avatar_323b.svg'
-                }")`}} 
-                />
+              <PictureUpdate pictureUrl={user.profilePictureURL} />
             }
             { error && 
               <p> {error.message} </p>

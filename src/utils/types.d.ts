@@ -12,7 +12,11 @@ export type ApiRequest = NextApiRequest & {
     set (user : string, session : UserSession) : void,
     save () : Promise<void>
   },
-  ORM: ORM
+  ORM: ORM,
+  file : {
+    filename : string,
+    path : string
+  }
 };
 
 
@@ -60,6 +64,10 @@ export type Response = {
 export type NewPostResponse = {
   response: string,
   post? : PostWithAuthorInfo
+}
+
+export type UpdatePictureResponse = Response & {
+  pictureURL? : string
 }
 
 export type PostIndexResponse = PostWithAuthorInfo[]
